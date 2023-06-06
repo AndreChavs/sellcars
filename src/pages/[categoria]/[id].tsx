@@ -10,7 +10,7 @@ type ParamsProps = {
 }
 
 export async function getStaticPaths() {
-  const url = 'http://localhost:3000/api/produtos' //api all-data
+  const url = 'http://127.0.0.1:3000/api/produtos' //api all-data
   const response = await fetch(url)
   const carros:DataGridCar[] = await response.json()
   //Deve buscar todos os dados do banco de dados e retornar apenas os valores que serão usados no espelhamento.
@@ -24,8 +24,8 @@ export async function getStaticPaths() {
   return { paths, fallback:false}
 }
 export async function getStaticProps({params}:ParamsProps) {
-  const {id, categoria} = params  
-  const response = await fetch(`http://localhost:3000/api/categoria/${id}`) 
+  const {id} = params  
+  const response = await fetch(`http://127.0.0.1:3000/api/categoria/${id}`) 
   const carro:DataGridCar = await response.json() 
     // espelhamento - api/[id].js
   return {

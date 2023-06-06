@@ -1,4 +1,3 @@
-import { DataGridState } from "@/global";
 import React, { RefObject } from "react"
 import styles from '../../styles/modules/Slider.module.css'
 

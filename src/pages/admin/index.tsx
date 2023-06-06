@@ -37,7 +37,7 @@ export default function Admin() {
     if (dataSlide.length === 0) {
       getSlides(setDataSlide)     
     }
-  },[dataSlide])
+  },[])
   
   if(data){    
     return (

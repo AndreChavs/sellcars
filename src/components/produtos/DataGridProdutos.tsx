@@ -22,6 +22,7 @@ export default function DataGridProdutos() {
         }
       })
     } 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[dataCar.length])
   
   const columns: GridColDef[] = [
