@@ -33,11 +33,12 @@ export default function Admin() {
   const dataSlide = useStore((state) => state.dataSlide)
   const setDataSlide = useStore((state) => state.setDataSlide)
   
-  React.useEffect(() => {    
+  React.useEffect(() => {       
     if (dataSlide.length === 0) {
       getSlides(setDataSlide)     
     }
-  },[])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[dataSlide.length])
   
   if(data){    
     return (
