@@ -1,0 +1,26 @@
+.modal {
+  position: fixed; /* Posiciona a janela modal de forma fixa na tela */
+  z-index: 999; /* Define a ordem de empilhamento da janela modal */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Adiciona uma barra de rolagem caso o conteúdo da janela modal seja maior que a tela */
+  background-color: rgba(0,0,0,0.4); /* Adiciona um fundo escuro para destacar a janela modal */
+}
+.modalContent {
+  background-color: #fefefe;
+  margin: 15% auto; /* Centraliza a janela modal na tela */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Define a largura da janela modal */
+}
+/* Estilos para o botão de abrir a janela modal */
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}

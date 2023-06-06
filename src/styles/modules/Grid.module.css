@@ -1,0 +1,27 @@
+.grid01 {width: calc(8.33333% - 20px);}
+.grid02 {width: calc(16.66667% - 20px);}
+.grid03 {width: calc(25% - 20px);}
+.grid04 {width: calc(33.33333% - 20px);}
+.grid05 {width: calc(41.66667% - 20px);}
+.grid06 {width: calc(50% - 20px);}
+.grid07 {width: calc(58.33333% - 20px);}
+.grid08 {width: calc(66.66667% - 20px);}
+.grid09 {width: calc(75% - 20px);}
+.grid10 {width: calc(83.33333% - 20px);}
+.grid11 {width: calc(91.66667% - 20px);}
+.grid12 {width: calc(100% - 20px);}
+
+.grid01, .grid02, .grid03, .grid04, .grid05, .grid06, .grid07, .grid08, .grid09, .grid10, .grid11, .grid12{
+    margin: 10px;    
+}
+
+@media screen and (max-width: 767px) {
+  .grid03{
+    width: calc(50% - 20px);
+  }
+
+  .grid01, .grid02, .grid04, .grid05, .grid06,
+  .grid07, .grid08, .grid09, .grid10, .grid11, .grid12{
+      width: 100%;
+  }  
+}

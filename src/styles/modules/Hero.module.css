@@ -1,0 +1,35 @@
+.hero{
+  margin-top: 100px; 
+  position: relative;
+  width: 100%;
+  height: 380px;
+}
+.hero img{
+  object-fit: cover;  
+}
+.title{
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 5em;
+  font-weight: 300;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.title::after{
+  content: '';
+  display: block;
+  width: 200px;
+  height: 4px;
+  background-color: #fff;
+  margin: 10px auto; 
+}
+
+@media screen and (max-width: 767px) {
+  .title{
+    font-size: 4em;
+  }
+}

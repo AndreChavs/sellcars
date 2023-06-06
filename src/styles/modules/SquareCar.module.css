@@ -1,0 +1,18 @@
+.card{
+  box-shadow: 1px 1px 3px #777;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px 10px;
+  transition: .3s;
+}
+.card:hover{
+  box-shadow: 3px 3px 6px #777;
+  transform: scale(1.05);
+  transition: .3s;
+}
+.card span{
+  font-size: 2em;
+  font-weight: 500;
+  color: #707070;
+  text-transform: capitalize;
+}

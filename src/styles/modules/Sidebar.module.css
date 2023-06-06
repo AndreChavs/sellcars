@@ -1,0 +1,87 @@
+.sidebar{
+  border-radius: 7px;
+  background: #f2f2f2;
+  box-shadow:  5px 5px 10px #a7a7a7,
+              -5px -5px 10px #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x:hidden;
+  transition: .3s ease-in;
+}
+.headerSidebar{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 3px;
+}
+.logo{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo i{
+  font-size: 3em;  
+}
+.logo span{
+  font-size: 1.3em;
+}
+
+.hamburger{
+  cursor: pointer;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navList{
+  margin: 10px;
+}
+.navList li{
+  margin-bottom: 10px;
+  padding: 0px 5px;
+  display: flex;  
+  height: 50px;  
+  color: #707070;
+  cursor: pointer;
+  transition: .3s;
+}
+.navList li:hover{
+  border-radius: 7px;
+  background: linear-gradient(145deg, #ffffff, #dadada);
+  box-shadow:  5px 5px 10px #a7a7a7,
+              -5px -5px 10px #ffffff;
+  color: #000;
+}
+.navList li:active{
+  transform: translateY(2px);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);    
+}
+.navList li a{
+  display: flex;
+  align-items: center;
+  font-size: 2em;  
+}
+.navList li a i{
+  margin-right: 20px;  
+}
+
+.logout{
+  align-self: center;
+  margin: auto auto 30px auto;
+}
+.logout a{
+  /* display: flex;   */
+  align-items: center;  
+  width:100%;
+}
+.logout a i{  
+  color: red;
+  /* margin-right: 5px; */
+  font-size:2.5em;
+}
+.logout a span{
+  display:block ;
+  font-size:1em;
+}
