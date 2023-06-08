@@ -23,7 +23,7 @@ const categorias = [
   { nome: 'esportivo' }
 ]
 
-const request = new ProdutoRequest('http://localhost:3000/api/produtos')
+const request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
 
 export async function getStaticProps() {
   const slides = await getSlides();
