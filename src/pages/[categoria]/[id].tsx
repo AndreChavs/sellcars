@@ -1,16 +1,18 @@
-import { InferGetStaticPropsType } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-type ParamsProps = {
-  params:{
-    id:string;
-    categoria: string;
-  }
-}
 
-export async function getStaticPaths() {
-  const url = 'http://localhost:3000/api/produtos' //api all-data
+// type ParamsProps = {
+//   params:{
+//     id:string;
+//     categoria: string;
+//   }
+// }
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const url = `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/produtos` //api all-data
+  console.log(url)
   const response = await fetch(url)
   const carros:DataGridCar[] = await response.json()
   //Deve buscar todos os dados do banco de dados e retornar apenas os valores que serão usados no espelhamento.
@@ -23,9 +25,9 @@ export async function getStaticPaths() {
   })  
   return { paths, fallback:false}
 }
-export async function getStaticProps({params}:ParamsProps) {
-  const {id} = params  
-  const response = await fetch(`http://localhost:3000/api/categoria/${id}`) 
+export const getStaticProps: GetStaticProps = async (context) => {
+  const id = context.params?.id  
+  const response = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}/api/categoria/${id}`) 
   const carro:DataGridCar = await response.json() 
     // espelhamento - api/[id].js
   return {
@@ -33,19 +35,19 @@ export async function getStaticProps({params}:ParamsProps) {
   }
 }
 
-export default function Carro({carro}:InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Carro(props:InferGetStaticPropsType<typeof getStaticProps>) {
   
   function render() {
-    if (carro) { 
+    if (props.carro) { 
       return (
       <div>
         <div>
-          <Image src={carro.image as string} alt={'wdaywhdawd'} width={380} height={300}/>
+          <Image src={props.carro.image as string} alt={'wdaywhdawd'} width={380} height={300}/>
         </div>
-        <h1 style={{color:'red'}}>{carro.marca} {carro.modelo}</h1>
-        <h2>categoria: {carro.categoria}</h2>
-        <h2>Marca: {carro.marca}</h2>
-        <span>ID: {carro.id}</span>
+        <h1 style={{color:'red'}}>{props.carro.marca} {props.carro.modelo}</h1>
+        <h2>categoria: {props.carro.categoria}</h2>
+        <h2>Marca: {props.carro.marca}</h2>
+        <span>ID: {props.carro.id}</span>
       </div>)
     }
   }
