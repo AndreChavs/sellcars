@@ -15,7 +15,7 @@ export default function FormProdutos() {
   const [ano, setAno] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const Request = new ProdutoRequest('http://localhost:3000/api/produtos')
+  const Request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
 
   // Função para exibir a imagem selecionada
   async function exibirImagem({target}: React.ChangeEvent<HTMLInputElement>) {

@@ -24,7 +24,7 @@ const categorias = [
 ]
 
 const request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
-
+console.log(request.url)
 export async function getStaticProps() {
   const slides = await getSlides();
   const carros = await request.getRequest();

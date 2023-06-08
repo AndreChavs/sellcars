@@ -1,5 +1,6 @@
 export async function getSlides(setDataSlide?:(formData: DataGridState[]) => void) {
-  const url = 'http://localhost:3000/api/sliders'
+  // const url = 'http://localhost:3000/api/sliders'
+  const url = `${process.env.NEXT_API_URL}/api/sliders`
   const response = await fetch(url)  
   if (response.ok) {    
     if (setDataSlide) {
@@ -14,7 +15,7 @@ export async function getSlides(setDataSlide?:(formData: DataGridState[]) => voi
 
 export async function postSlide(formData: DataGridState, setDataSlide: any){
   if(typeof formData.image !== 'string' && typeof formData.imageMobile !== 'string'){
-    const url = 'http://localhost:3000/api/sliders'
+    const url = `${process.env.NEXT_API_URL}/api/sliders`
     const options = {
       method:"POST",
       headers:{
@@ -34,7 +35,7 @@ export async function postSlide(formData: DataGridState, setDataSlide: any){
 }
 
 export async function updateSlide(formData:DataGridState, setDataSlide:any) {
-  const url = 'http://localhost:3000/api/sliders'
+  const url = `${process.env.NEXT_API_URL}/api/sliders`
   const options = {
     method:"PUT",
     headers:{
@@ -52,7 +53,7 @@ export async function updateSlide(formData:DataGridState, setDataSlide:any) {
 }
 
 export async function deleteSlide(id:string, setDataSlide:any) {
-  const url = 'http://localhost:3000/api/sliders'
+  const url = `${process.env.NEXT_API_URL}/api/sliders`
   const options = {
     method: 'DELETE',
     headers:{

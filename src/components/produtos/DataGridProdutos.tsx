@@ -6,7 +6,8 @@ import { useCar } from '@/global/store';
 import ProdutoRequest from '@/functions/requests/produto/produtoRequest';
 import ModalEditProduto from '../interface/modals/ModalEditProduto';
 
-const produtoRequest = new ProdutoRequest('http://localhost:3000/api/produtos')
+const produtoRequest = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
+
 
 export default function DataGridProdutos() {
   const dataCar = useCar((state) => state.dataCar)

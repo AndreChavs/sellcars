@@ -3,13 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 
-// type ParamsProps = {
-//   params:{
-//     id:string;
-//     categoria: string;
-//   }
-// }
-
 export const getStaticPaths: GetStaticPaths = async () => {
   const url = `${process.env.NEXT_API_URL}/api/produtos` //api all-data
   console.log(url)

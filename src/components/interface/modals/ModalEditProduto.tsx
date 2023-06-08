@@ -12,7 +12,7 @@ interface ModalProps{
   editData: DataGridCar;
 }
 
-const request = new ProdutoRequest('http://localhost:3000/api/produtos')
+const request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
 
 const ModalEditProduto = ({setModal, editData}: ModalProps) => {  
   const [imagem, setImagem] = React.useState<{base64:string, fileData:FileData}>();
