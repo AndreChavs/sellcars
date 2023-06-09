@@ -4,8 +4,9 @@ import Link from "next/link";
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const url = `${process.env.NEXT_API_URL}/api/produtos` //api all-data
-  const response = await fetch(url)
+  const url = (process.env.NEXT_API_URL)? process.env.NEXT_API_URL : window.location.origin 
+  console.log(url)
+  const response = await fetch(`${url}/api/produtos`)
   const carros:DataGridCar[] = await response.json()
   //Deve buscar todos os dados do banco de dados e retornar apenas os valores que serão usados no espelhamento.
   const paths = carros.map( carro => {    
@@ -13,18 +14,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
       params: { //retorna 2 parametro
         id: carro.id?.toString(), 
         categoria: carro.categoria 
-    }}
+      }
+    }
   })  
   return { paths, fallback:false}
 }
 export const getStaticProps: GetStaticProps = async (context) => {
-  const id = context.params?.id  
-  const response = await fetch(`${process.env.NEXT_API_URL}api/categoria/${id}`) 
-  const carro:DataGridCar = await response.json() 
+  const id = context.params?.id
+  const url = (process.env.NEXT_API_URL)? process.env.NEXT_API_URL : window.location.origin
+  if(id){
+    const response = await fetch(`${url}/api/categoria/${id}`) 
+    const carro:DataGridCar = await response.json() 
     // espelhamento - api/[id].js
-  return {
-    props:{carro}
-  }
+    
+    return {
+      props:{carro}
+    }
+  }else {
+    return {
+      props:{}
+    }
+  } 
 }
 
 export default function Carro(props:InferGetStaticPropsType<typeof getStaticProps>) {
