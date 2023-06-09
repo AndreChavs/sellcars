@@ -12,12 +12,12 @@ export default class Controller{
     try {
       const result = await prisma.carros.findMany();      
       if (result) {
-        return res.status(200).json(result)
+        return res.status(200).json(result)                 
       } else {
-        return res.status(404).json({error:"Erro na realização de busca de dados"})  
+        return res.status(404).json({error:"Erro na realização de busca de dados"})        
       }
     } catch (error) {
-      return res.status(404).json({error:`Erro ao buscar Dados: ${error}`})      
+      return res.status(404).json({error:`Erro ao buscar Dados: ${error}`})
     }
   }
   
@@ -50,7 +50,6 @@ export default class Controller{
           }
         } 
       }
-
     } catch (error) {
       return res.status(404).json({error:`Erro ao Enviar dados: ${error}`})
     }

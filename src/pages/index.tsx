@@ -88,7 +88,7 @@ export default function Home({slides, carros}:{slides:DataGridState[], carros:Da
             key={index}            
             marca={carro.marca}
             modelo={carro.modelo}
-            href={`/${carro.categoria}/${carro.id}`}            
+            href={`/${carro.id}`}            
           />
         )
       })
