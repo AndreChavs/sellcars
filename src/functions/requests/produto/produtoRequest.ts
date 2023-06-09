@@ -26,7 +26,7 @@ export default class ProdutoRequest {
     }
   }
 
-  public async postRequest(formData:DataGridCar){
+  public async postRequest(formData:DataGridCarFormData){
     const options = {
       method:"POST",
       headers:{

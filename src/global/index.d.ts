@@ -20,7 +20,17 @@ export declare global {
   }
 
   interface DataGridCar {
-    id?: string;
+    id: string;
+    image: {
+      base64:string;
+      fileData: FileData;
+    } | string;
+    categoria: string;
+    modelo: string;
+    marca: string;
+    ano: string;
+  }
+  interface DataGridCarFormData {
     image: {
       base64:string;
       fileData: FileData;

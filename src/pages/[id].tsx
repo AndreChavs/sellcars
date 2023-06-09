@@ -8,25 +8,22 @@ import { useRouter } from 'next/router'
 export const getStaticPaths: GetStaticPaths = async () => {
   const url = (process.env.NEXT_API_URL)? process.env.NEXT_API_URL : window.location.origin; 
   const response = await fetch(`${url}/api/produtos`);
+  if(!response.ok) throw new Error('Error request')
   const carros:DataGridCar[] = await response.json();  
-  const paths = carros.map( carro => {
-    if(carro?.id){
-      return {
-        params: {
-          id: carro.id
-        }
-      }   
-    }else{
-      return { params: {} }
+  const paths = carros.map( carro => {    
+    return {
+      params: {
+        id: carro.id
+      }
     }
   });
   return { paths, fallback:true}
 }
 
-export const getStaticProps: GetStaticProps<{carro:DataGridCar}> = async (context) => {
+export const getStaticProps: GetStaticProps<{carro:DataGridCar}> = async ({params}) => {
   // espelhamento - api/[id].js
   // console.log(context)
-  const id = context.params?.id
+  const id = params?.id
   function verifyID(id:string | string[] | undefined):string {
     return (id && typeof id === 'string')? id : ''  
   }  
@@ -34,12 +31,12 @@ export const getStaticProps: GetStaticProps<{carro:DataGridCar}> = async (contex
   const response = await fetch(`${url}/api/categoria/${verifyID(id)}`) 
   const carro:DataGridCar = await response.json() 
   return {
-    props:{carro}, revalidate: 1,
+    props:{carro}
   }   
 }
 
 export default function Carro(props:InferGetStaticPropsType<typeof getStaticProps>) {
-  const [car, setCar] = React.useState(props.carro)
+  
   const router = useRouter()
 
   if (router.isFallback) {
@@ -47,16 +44,16 @@ export default function Carro(props:InferGetStaticPropsType<typeof getStaticProp
   }
 
   function render() {
-    if (car) { 
+    if (props.carro) { 
       return (
       <div>
         <div>
-          <Image src={car.image as string} alt={'wdaywhdawd'} width={380} height={300}/>
+          <Image src={props.carro.image as string} alt={'wdaywhdawd'} width={380} height={300}/>
         </div>
-        <h1 style={{color:'red'}}>{car.marca} {car.modelo}</h1>
-        <h2>categoria: {car.categoria}</h2>
-        <h2>Marca: {car.marca}</h2>
-        <span>ID: {car.id}</span>
+        <h1 style={{color:'red'}}>{props.carro.marca} {props.carro.modelo}</h1>
+        <h2>categoria: {props.carro.categoria}</h2>
+        <h2>Marca: {props.carro.marca}</h2>
+        <span>ID: {props.carro.id}</span>
       </div>)
     }
   }

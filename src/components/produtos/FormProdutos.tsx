@@ -40,7 +40,7 @@ export default function FormProdutos() {
     event.preventDefault()
     if (imagem && categoria && marca && modelo && ano) {
       setIsLoading(true);
-      const formData:DataGridCar = {
+      const formData:DataGridCarFormData = {        
         image: imagem,
         categoria: categoria,
         modelo: modelo,
