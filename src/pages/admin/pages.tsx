@@ -5,9 +5,7 @@ import Content from '@/layout/Content'
 import Container from '@/layout/Container'
 
 export async function getServerSideProps(context: NextPageContext) {  
-  const session = await getSession(context)
-  // console.log(session)
-  //Se a sesseion for null(false), então será redirecionado para o destino '/login'
+  const session = await getSession(context)    
   if (!session) {
     return {
       redirect: {

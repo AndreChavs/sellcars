@@ -11,8 +11,9 @@ import Modal from './interface/modals/Modal';
 import Image from 'next/image';
 import {useStore} from '@/global/store';
 import ModalEditSlide from './interface/modals/ModalEditSlide';
-import { deleteSlide } from '@/functions/requests/slide/slideRequests';
+import SlideRequests from '@/functions/requests/slide/slideRequests';
 
+const requestSlides = new SlideRequests('/api/sliders')
 
 function EditToolbar() {
   const [modal, setModal] = React.useState<boolean>(false);
@@ -127,8 +128,8 @@ export default function StartEditButtonGrid() {
             return item.id === params.id
           })         
           const result = confirm(`Tem certeza que deseja apagar o item ${index  + 1} da lista ?`)
-          if(result && typeof params.id === 'string'){ 
-            await deleteSlide(params.id, setDataSlide)
+          if(result && typeof params.id === 'string'){
+            await requestSlides.deleteRequest(params.id, setDataSlide)
           }  
         }
         return (

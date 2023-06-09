@@ -1,12 +1,13 @@
 import React from 'react'
-import { NextPageContext } from 'next'
+import { InferGetStaticPropsType, NextPageContext } from 'next'
 import { getSession, useSession } from 'next-auth/react'
 import Sidebar from '@/layout/Sidebar'
 import Content from '@/layout/Content'
 import BasicTabs from '@/components/produtos/BasicTabs'
 
 export async function getServerSideProps(context: NextPageContext) {  
-  const session = await getSession(context)  
+  const session = await getSession(context) 
+  
   if (!session) {
     return {
       redirect: {
@@ -22,7 +23,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 export default function Produtos() {
   const { data }  = useSession()
-
+  
   if(data){    
     return (
       <>

@@ -3,21 +3,21 @@ import { DataGrid, GridColDef, GridRenderCellParams, GridRowsProp, GridToolbar }
 import Image from 'next/image';
 import { Button } from '@mui/material';
 import { useCar } from '@/global/store';
-import ProdutoRequest from '@/functions/requests/produto/produtoRequest';
 import ModalEditProduto from '../interface/modals/ModalEditProduto';
+import ProdutoRequest from '@/functions/requests/produto/produtoRequest';
 
-const produtoRequest = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
-
+const requestProdutos = new ProdutoRequest('/api/produtos')
 
 export default function DataGridProdutos() {
   const dataCar = useCar((state) => state.dataCar)
   const setDataCar = useCar((state) => state.setDataCar)
   const [editData, setEditData] = React.useState<DataGridCar | null>(null)
   const [modalEdit, setModalEdit] = React.useState<boolean>(false)
-
-  React.useEffect(() => { 
+  
+  
+  React.useEffect(() => {    
     if (dataCar.length >= 0) {
-      produtoRequest.getRequest().then((dataJSON) => {
+      requestProdutos.getRequest().then((dataJSON) => {        
         if (dataJSON) {
           setDataCar(dataJSON)                
         }
@@ -94,7 +94,7 @@ export default function DataGridProdutos() {
           if (index || index === 0) {
             const result = confirm(`Tem certeza que deseja apagar o item ${index  + 1} da lista ?`)
             if (result && typeof params.id === 'string') {
-              await produtoRequest.deleteRequest(params.id, setDataCar)
+              await requestProdutos.deleteRequest(params.id, setDataCar)
             }
           }
         }

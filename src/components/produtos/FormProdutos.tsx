@@ -6,6 +6,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 import ProdutoRequest from '@/functions/requests/produto/produtoRequest';
 import convertImageToBase64 from '@/functions/conversorBase64';
 
+const requestProduto = new ProdutoRequest(`/api/produtos`)
 
 export default function FormProdutos() {
   const [imagem, setImagem] = React.useState<{base64: string, fileData:FileData}>();
@@ -15,7 +16,6 @@ export default function FormProdutos() {
   const [ano, setAno] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const Request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
 
   // Função para exibir a imagem selecionada
   async function exibirImagem({target}: React.ChangeEvent<HTMLInputElement>) {
@@ -47,7 +47,7 @@ export default function FormProdutos() {
         marca: marca,
         ano: ano
       }
-      Request.postRequest(formData).then( res => {
+      requestProduto.postRequest(formData).then( res => {
         alert(res)
       })
       setIsLoading(false)

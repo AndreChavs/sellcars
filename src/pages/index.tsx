@@ -7,11 +7,12 @@ import Link from 'next/link'
 import SquareCar from '@/components/interface/cards/SquareCar'
 import { Grid06 } from '@/layout/Grid'
 import Image from 'next/image'
-import { getSlides } from '@/functions/requests/slide/slideRequests'
-import { InferGetStaticPropsType } from 'next'
+// import { getSlides } from '@/functions/requests/slide/slideRequests'
+
 import { FadeLoader } from 'react-spinners'
 import CardCar from '@/components/interface/cards/CardCar'
 import ProdutoRequest from '@/functions/requests/produto/produtoRequest'
+import SlideRequests from '@/functions/requests/slide/slideRequests'
 
 const categorias = [
   { nome: 'todos' },
@@ -23,11 +24,13 @@ const categorias = [
   { nome: 'esportivo' }
 ]
 
-const request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
-console.log(request.url)
+const requestCars = new ProdutoRequest(`/api/produtos`);
+const requestSlides = new SlideRequests(`/api/sliders`)
+// console.log(process.env.NEXT_API_URL)
+
 export async function getStaticProps() {
-  const slides = await getSlides();
-  const carros = await request.getRequest();
+  const slides = await requestSlides.getRequest();
+  const carros = await requestCars.getRequest();
   return {
     props: {
       slides,
@@ -36,11 +39,12 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home({slides, carros}:InferGetStaticPropsType<typeof getStaticProps>) {
+export default function Home({slides, carros}:{slides:DataGridState[], carros:DataGridCar[]}) {
   
-  const [_carros, setCarros] = React.useState<DataGridCar[] | undefined | null>(carros)
+  const [_carros, setCarros] = React.useState<DataGridCar[]>(carros)
   const [active, setActive] = React.useState<string>('todos')  
- 
+  
+                 
   const override = {
     display: 'block',
     margin: '200px auto',
@@ -58,7 +62,7 @@ export default function Home({slides, carros}:InferGetStaticPropsType<typeof get
   function handleClick({currentTarget}:React.MouseEvent) {    
     if (currentTarget instanceof HTMLLIElement) {                
       setActive(currentTarget.innerText)
-      if (carros) {               
+      if (carros) {
         if (currentTarget.innerText !== "todos") {          
           setCarros( () => carros.filter( (carro) => {
               return carro.categoria === currentTarget.innerText

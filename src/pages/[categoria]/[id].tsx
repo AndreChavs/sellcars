@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const url = `${process.env.NEXT_API_URL}/api/produtos` //api all-data
-  console.log(url)
   const response = await fetch(url)
   const carros:DataGridCar[] = await response.json()
   //Deve buscar todos os dados do banco de dados e retornar apenas os valores que serão usados no espelhamento.
@@ -20,7 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 export const getStaticProps: GetStaticProps = async (context) => {
   const id = context.params?.id  
-  const response = await fetch(`${process.env.NEXT_API_URL}/api/categoria/${id}`) 
+  const response = await fetch(`${process.env.NEXT_API_URL}api/categoria/${id}`) 
   const carro:DataGridCar = await response.json() 
     // espelhamento - api/[id].js
   return {

@@ -2,15 +2,23 @@ export default class ProdutoRequest {
   public url: string;
   
   constructor(url:string){
-    this.url = url;    
+    this.url = this.urlApiPath(url);   
   }
 
-  public async getRequest(setUpdateData?:(formData: any) => void):Promise<DataGridCar[] | undefined | null>{
-    const response = await fetch(this.url)
+  private urlApiPath(url:string):string{
+    if(process.env.NEXT_API_URL){
+      return process.env.NEXT_API_URL + url
+    } else {
+      return window.location.origin + url
+    }
+  }
+
+  public async getRequest(setUpdateData?:(formData: any) => void){
+    const response = await fetch(this.url)    
     if (response.ok) {
       if(setUpdateData){
         setUpdateData(await response.json())        
-      } else {
+      } else {        
         return await response.json();
       }
     }else {
@@ -25,7 +33,7 @@ export default class ProdutoRequest {
         'Content-Type': 'application/json'
       },
       body:JSON.stringify(formData)
-    }
+    }   
     const response = await fetch(this.url, options)
     if (response.ok) {
       const {message} = await response.json()
@@ -42,7 +50,7 @@ export default class ProdutoRequest {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
-    }
+    }    
     const response = await fetch(this.url, options);    
     if (response.ok) {
       if(setUpdateData) this.getRequest(setUpdateData);
@@ -61,7 +69,9 @@ export default class ProdutoRequest {
       },
       body:JSON.stringify({id: id})
     }
+    
     const response = await fetch(this.url, options)
+    console.log(response)
     if (response.ok) {
       const {message} = await response.json()
       if(setUpdateData) this.getRequest(setUpdateData);      

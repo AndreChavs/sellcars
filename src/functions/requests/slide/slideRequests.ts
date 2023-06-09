@@ -1,72 +1,86 @@
-export async function getSlides(setDataSlide?:(formData: DataGridState[]) => void) {
-  // const url = 'http://localhost:3000/api/sliders'
-  const url = `${process.env.NEXT_API_URL}/api/sliders`
-  const response = await fetch(url)  
-  if (response.ok) {    
-    if (setDataSlide) {
-      setDataSlide(await response.json())      
-    }else {
-      return await response.json()
-    }
-  } else {
-    return null
+export default class SlideRequests{
+  public url:string;
+  constructor(url: string){
+    this.url = this.urlApiPath(url);
   }
-}
 
-export async function postSlide(formData: DataGridState, setDataSlide: any){
-  if(typeof formData.image !== 'string' && typeof formData.imageMobile !== 'string'){
-    const url = `${process.env.NEXT_API_URL}/api/sliders`
+  private urlApiPath(url:string):string{
+    if(process.env.NEXT_API_URL){
+      return process.env.NEXT_API_URL + url
+    } else {
+      return window.location.origin + url
+    }
+  }
+
+  public async getRequest(setDataSlide?:(formData: DataGridState[]) => void):Promise<DataGridState[] | null | undefined>{    
+    const response = await fetch(this.url)
+    if (response.ok) {    
+      if (setDataSlide) {
+        setDataSlide(await response.json())      
+      }else {
+        return await response.json()
+      }
+    } else {
+      return null
+    }
+  }
+
+  public async postRequest(formData: DataGridState, setDataSlide: any){
     const options = {
       method:"POST",
       headers:{
         'Content-Type': 'application/json'
       },
       body:JSON.stringify(formData)
-    }   
-    const response = await fetch(url, options);    
+    }
+    
+    const response = await fetch(this.url, options);        
     if (response.ok) {
       const {message} = await response.json()      
-      await getSlides(setDataSlide)
+      await this.getRequest(setDataSlide)
       alert(message)
+      return message
     }else {
-      console.log('Falha ao enviar os dados')
+      return 'Falha ao enviar os dados'
+    }
+  }
+
+  public async updateRequest(formData:DataGridState, setDataSlide:any){
+    const options = {
+      method:"PUT",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify(formData)
+    }
+    
+    const response = await fetch(this.url, options)
+    if(response.ok){
+      const {message} = await response.json()    
+      await this.getRequest(setDataSlide)
+      return message        
+    }else {
+      alert("Falha ao editar os dados")
+    }
+  }
+
+  public async deleteRequest(id:string, setDataSlide:any):Promise<string>{
+    const options = {
+      method: 'DELETE',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({id: id})
+    }
+    
+    const response = await fetch(this.url, options)
+    if(response.ok){
+      const {message} = await response.json()
+      await this.getRequest(setDataSlide)
+      return message
+    }else{
+      return 'Erro ao fazer a requisição'
     }
   }
 }
 
-export async function updateSlide(formData:DataGridState, setDataSlide:any) {
-  const url = `${process.env.NEXT_API_URL}/api/sliders`
-  const options = {
-    method:"PUT",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body: JSON.stringify(formData)
-  }
-  const response = await fetch(url, options)
-  if(response.ok){
-    const {message} = await response.json()    
-    await getSlides(setDataSlide)        
-  }else {
-    alert("Falha ao editar os dados")
-  }
-}
-
-export async function deleteSlide(id:string, setDataSlide:any) {
-  const url = `${process.env.NEXT_API_URL}/api/sliders`
-  const options = {
-    method: 'DELETE',
-    headers:{
-      'Content-Type':'application/json'
-    },
-    body: JSON.stringify({id: id})
-  }
-  const response = await fetch(url, options)
-  if(response.ok){
-    const {message} = await response.json()
-    await getSlides(setDataSlide)
-    alert(message)
-  }else{
-    alert('Erro ao fazer a requisição')
-  }
-}

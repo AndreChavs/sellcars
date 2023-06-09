@@ -3,7 +3,9 @@ import convertImageToBase64 from '@/functions/conversorBase64';
 import Image from 'next/image';
 import styles from '../../styles/modules/Form.module.css'
 import {useStore} from '../../global/store'
-import { postSlide } from '@/functions/requests/slide/slideRequests';
+import SlideRequests from '@/functions/requests/slide/slideRequests';
+
+const requestSlides = new SlideRequests('/api/sliders')
 
 interface ModalProps{
   setModal:React.Dispatch<React.SetStateAction<boolean>>;
@@ -80,7 +82,8 @@ const AddSlideForm = ({setModal}: ModalProps) => {
         paragraph: text,
       }
       if (typeof formData.image !== 'string' && typeof formData.imageMobile !== 'string') {                
-        await postSlide(formData, setDataSlide)
+        // await postSlide(formData, setDataSlide)
+        await requestSlides.postRequest(formData, setDataSlide)
       }               
       setIsLoading(false)
       setModal((modal) => !modal)      

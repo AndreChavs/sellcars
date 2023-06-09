@@ -3,8 +3,10 @@ import styles from '../../styles/modules/Form.module.css'
 import Image from 'next/image'
 import convertImageToBase64 from '@/functions/conversorBase64'
 import { useStore } from '@/global/store';
-import {updateSlide} from '../../functions/requests/slide/slideRequests'
+import SlideRequests from '@/functions/requests/slide/slideRequests';
 
+
+const requestSlide = new SlideRequests('/api/sliders')
 
 interface EditSlideFormProps {
   setModal:React.Dispatch<React.SetStateAction<boolean>>;
@@ -80,8 +82,7 @@ const EditSlideForm = ({editData, setModal}:EditSlideFormProps) => {
         textButton:btnText,
         paragraph: text
       }
-      console.log(formData)
-      await updateSlide(formData, setDataSlide)
+      await requestSlide.updateRequest(formData, setDataSlide)
       setIsLoading(false)
       setModal((modal) => !modal)    
       

@@ -1,7 +1,6 @@
 import Controller from '@/functions/controllers/produto/ProdutoController';
 import type {NextApiRequest, NextApiResponse} from 'next'
 
-
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
 
   const controller = new Controller()

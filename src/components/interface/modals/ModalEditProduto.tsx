@@ -12,7 +12,7 @@ interface ModalProps{
   editData: DataGridCar;
 }
 
-const request = new ProdutoRequest(`${process.env.NEXT_API_URL}/api/produtos`)
+const requestProduto = new ProdutoRequest(`/api/produtos`)
 
 const ModalEditProduto = ({setModal, editData}: ModalProps) => {  
   const [imagem, setImagem] = React.useState<{base64:string, fileData:FileData}>();
@@ -67,7 +67,7 @@ const ModalEditProduto = ({setModal, editData}: ModalProps) => {
         ano: ano
       }
       
-      request.updateRequest(formData, setDataCar)
+      await requestProduto.updateRequest(formData, setDataCar)
       handleClose()
     }
   }
