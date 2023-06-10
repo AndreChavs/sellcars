@@ -1,37 +1,30 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticPaths, GetStaticPathsResult, GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from 'next/router'
+import StaticGenerate from "@/functions/requests/StaticGenerate";
+import { ParsedUrlQuery } from "querystring";
 
+const requestGenerate = new StaticGenerate('/api/produtos', '/api/categoria/')
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const url = (process.env.NEXT_API_URL)? process.env.NEXT_API_URL : window.location.origin; 
-  const response = await fetch(`${url}/api/produtos`);
-  if(!response.ok) throw new Error('Error request')
-  const carros:DataGridCar[] = await response.json();  
-  const paths = carros.map( carro => {    
+export const getStaticPaths: GetStaticPaths<ParsedUrlQuery> = async () => { 
+  const carros = await requestGenerate.GetPaths<DataGridCar[] | null>()    
+  const paths = carros?.map( carro => {
+    console.log(carro)    
     return {
-      params: {
-        id: carro.id
-      }
+      params: { id: carro.id }
     }
-  });
-  return { paths, fallback:true}
+  })
+  if(!paths) throw new Error()
+  return { paths: paths, fallback:'blocking' }   
 }
 
-export const getStaticProps: GetStaticProps<{carro:DataGridCar}> = async ({params}) => {
-  // espelhamento - api/[id].js
-  // console.log(context)
-  const id = params?.id
-  function verifyID(id:string | string[] | undefined):string {
-    return (id && typeof id === 'string')? id : ''  
-  }  
-  const url = (process.env.NEXT_API_URL)? process.env.NEXT_API_URL : window.location.origin  
-  const response = await fetch(`${url}/api/categoria/${verifyID(id)}`) 
-  const carro:DataGridCar = await response.json() 
+export const getStaticProps: GetStaticProps<{carro:DataGridCar}> = async (context) => {  
+  const carro = await requestGenerate.GetProps<DataGridCar>(context)
+  if(!carro) throw new Error()   
   return {
-    props:{carro}
+    props:{carro: carro}
   }   
 }
 
