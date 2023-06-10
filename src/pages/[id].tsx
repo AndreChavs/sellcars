@@ -10,8 +10,7 @@ const requestGenerate = new StaticGenerate('/api/produtos', '/api/categoria/')
 
 export const getStaticPaths: GetStaticPaths<ParsedUrlQuery> = async () => { 
   const carros = await requestGenerate.GetPaths<DataGridCar[] | null>()    
-  const paths = carros?.map( carro => {
-    console.log(carro)    
+  const paths = carros?.map( carro => {        
     return {
       params: { id: carro.id }
     }
